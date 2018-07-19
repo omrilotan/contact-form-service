@@ -1,0 +1,5 @@
+.DS_Store
+*.log
+.creds.sh
+node_modules
+package-lock.json

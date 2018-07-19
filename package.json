@@ -1,0 +1,30 @@
+{
+	"name": "contact-form-service",
+	"description": "Send email using NodeMailer & Gmail",
+	"version": "0.0.0",
+	"author": "omrilotan",
+	"homepage": "https://github.com/omrilotan/contact-form-service",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:omrilotan/contact-form-service.git"
+	},
+	"scripts": {
+		"start": "node lib/app",
+		"test": "mocha spec.js **/spec.js --full-trace",
+		"lint": "eslint -c .eslintrc lib/** --quiet"
+	},
+	"dependencies": {
+		"cors": "^2.8.4",
+		"email-validator": "^2.0.4",
+		"express": "^4.16.3",
+		"express-formidable": "^1.0.0",
+		"nodemailer": "^4.6.7"
+	},
+	"devDependencies": {
+		"chai": "^4.1.2",
+		"eslint": "^5.1.0",
+		"mocha": "^5.2.0"
+	},
+	"private": true
+}

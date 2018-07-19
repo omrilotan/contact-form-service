@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+			<title>Test</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+			<style>
+form{margin:2em;}
+input{width:100%;}
+a{display:block;border:1px solid black;text-align:center;}
+input,a{line-height:2em;margin:.5em 0;}
+		  </style>
+	</head>
+	<body>
+		<div id="message">Add the "to" parameter in the URL: <code>http://localhost:1337/v1/send?to=my@email.com</code></div>
+		<form action="http://localhost:1337/v1/send?to=should.be.replaced" method="post">
+			from:
+			<input type="text" name="from" value="my name or something">
+			subject:
+			<input type="text" name="subject" value="Subject of my message">
+			custom:
+			<input type="text" name="custom" value="something else">
+			<input type="hidden" name="token" value="2tWak5XSkhSWGxPUVE">
+			<input type="submit">
+			<a href="#!" id="btn">send asynchronously</a>
+		</form>
+		<script>
+			!!location.search && message.parentNode.removeChild(message);
+
+			document.querySelector('form').setAttribute('action', `http://localhost:1337/v1/send${location.search}`);
+
+			btn.onclick = function(event) {
+				event.preventDefault();
+
+				const data = [].reduce.call(
+					document.forms[0],
+					(accumulator, {name, value}) => value ? Object.assign(
+						accumulator,
+						{[name]: value}
+					) : accumulator,
+					{}
+				);
+
+				fetch(`http://localhost:1337/v1/send${location.search}`, {
+					headers: {'Content-Type': 'application/json; charset=utf-8'},
+					method: 'POST',
+					mode: 'cors',
+					cache: 'no-cache',
+					credentials: 'same-origin',
+					redirect: 'follow',
+					referrer: 'no-referrer',
+					body: JSON.stringify(data),
+				});
+			}
+		</script>
+	</body>
+</html>
