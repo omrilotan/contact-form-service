@@ -3,21 +3,24 @@
 This little service is meant for use in static pages. It uses Gmail API to send emails in your name.
 It can accept form data (HTML post form) or JSON (an asynchronous request like ajax or fetch).
 
+## Endpoints
+
+`v1/${DESTINATION}?to=my@email.net`
+
+### Destinations
+- email
+- slack
+
 ## Prerequisites
 
 Environment variables are set on deployment machine:
 
 | variable | purpose | Example
 | - | - | -
+| `TOKEN` | Just a simple token that needs to be passed with the request | `2tWak5XSkhSWGxPUVE`
 | `GMAIL_ADDRESS` | Your gmail address | `myname@gmail.com`
 | `GMAIL_PASS` | Your gmail password | `jJwSmVHRkhSbGhrZHc`
-| `TOKEN` | Just a simple token that needs to be passed with the request | `2tWak5XSkhSWGxPUVE`
-
-Optional Slack notifications will be sent if the `SLACK_WEBHOOK` variable exist
-
-| variable | purpose | Example
-| - | - | -
-| `SLACK_WEBHOOK` | Web address of a defined slack hook | `https://hooks.slack.com/services/YMDSGTP1R/IBT3DRJVY/fBR7QVh6lu8S3GqGj0vbcdFv`
+| `SLACK_WEBHOOK` | Web address of a defined slack hook | `https://hooks.slack.com/...`
 | `SLACK_CHANNEL` | Overrides the webhook default channel | `"#events"`
 
 Default success message is "Thank you" or something. You can override this
@@ -34,7 +37,7 @@ Using this gmail API is considered less secure and is not possible with accounts
 
 ## Example of a form with progressive enhancement
 ```html
-<form id="contactme" action="http://localhost:1337/v1/send?to=my@email.net" method="post">
+<form id="contactme" action="http://localhost:1337/v1/email?to=my@email.net" method="post">
 	<input type="text" name="name" placeholder="name" value="">
 	<input type="text" name="contact" placeholder="phone or email">
 	<textarea name="message" placeholder="How can I help you?"></textarea>

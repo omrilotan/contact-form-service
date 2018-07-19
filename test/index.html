@@ -13,8 +13,8 @@ input,a{line-height:2em;margin:.5em 0;}
 		  </style>
 	</head>
 	<body>
-		<div id="message">Add the "to" parameter in the URL: <code>http://localhost:1337/v1/send?to=my@email.com</code></div>
-		<form action="http://localhost:1337/v1/send?to=should.be.replaced" method="post">
+		<div id="message">Add the "to" parameter in the URL: <code>http://localhost:1337/v1/slack?to=my@email.com</code></div>
+		<form action="http://localhost:1337/v1/slack?to=should.be.replaced" method="post">
 			from:
 			<input type="text" name="from" value="my name or something">
 			subject:
@@ -28,7 +28,7 @@ input,a{line-height:2em;margin:.5em 0;}
 		<script>
 			!!location.search && message.parentNode.removeChild(message);
 
-			document.querySelector('form').setAttribute('action', `http://localhost:1337/v1/send${location.search}`);
+			document.querySelector('form').setAttribute('action', `http://localhost:1337/v1/slack${location.search}`);
 
 			btn.onclick = function(event) {
 				event.preventDefault();
@@ -42,7 +42,7 @@ input,a{line-height:2em;margin:.5em 0;}
 					{}
 				);
 
-				fetch(`http://localhost:1337/v1/send${location.search}`, {
+				fetch(document.forms[0].action, {
 					headers: {'Content-Type': 'application/json; charset=utf-8'},
 					method: 'POST',
 					mode: 'cors',
