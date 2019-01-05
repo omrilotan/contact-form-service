@@ -6,6 +6,13 @@
 			<title>Test</title>
 			<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
 			<style>
+body {
+  color: #000;
+  background: #fff;
+}
+body,input, button {
+  font: 100 100%/1.4 -apple-system, "BlinkMacSystemFont", "Helvetica Neue", "Helvetica", "Lucida Grande", "Arial", sans-serif;
+}
 form{margin:2em;}
 input{width:100%;}
 a{display:block;border:1px solid black;text-align:center;}
@@ -14,7 +21,8 @@ input,a{line-height:2em;margin:.5em 0;}
 	</head>
 	<body>
 		<div id="message">Add the "to" parameter in the URL: <code>http://localhost:1337/v1/slack?to=my@email.com</code></div>
-		<form action="http://localhost:1337/v1/slack?to=should.be.replaced" method="post">
+		<h1>email</h1>
+		<form action="http://localhost:1337/v1/email?to=should.be.replaced" method="post">
 			from:
 			<input type="text" name="from" value="my name or something">
 			subject:
@@ -25,34 +33,46 @@ input,a{line-height:2em;margin:.5em 0;}
 			<input type="submit">
 			<a href="#!" id="btn">send asynchronously</a>
 		</form>
+		<h1>Slack</h1>
+		<form action="http://localhost:1337/v1/slack?channel=%23experiments" method="post">
+			from
+			<input type="text" name="from" value="from">
+			message
+			<input type="text" name="message" value="Here's my message">
+			<input type="hidden" name="token" value="2tWak5XSkhSWGxPUVE">
+			<input type="submit">
+		</form>
+
 		<script>
 			!!location.search && message.parentNode.removeChild(message);
 
-			document.querySelector('form').setAttribute('action', `http://localhost:1337/v1/slack${location.search}`);
+			document.querySelector('form').setAttribute('action', `http://localhost:1337/v1/email	${location.search}`);
 
-			btn.onclick = function(event) {
-				event.preventDefault();
+			[].forEach.call(document.forms, form => {
+				form.onsubmit = function(event) {
+					event.preventDefault();
 
-				const data = [].reduce.call(
-					document.forms[0],
-					(accumulator, {name, value}) => value ? Object.assign(
-						accumulator,
-						{[name]: value}
-					) : accumulator,
-					{}
-				);
+					const data = [].reduce.call(
+						form,
+						(accumulator, {name, value}) => value ? Object.assign(
+							accumulator,
+							{[name]: value}
+						) : accumulator,
+						{}
+					);
 
-				fetch(document.forms[0].action, {
-					headers: {'Content-Type': 'application/json; charset=utf-8'},
-					method: 'POST',
-					mode: 'cors',
-					cache: 'no-cache',
-					credentials: 'same-origin',
-					redirect: 'follow',
-					referrer: 'no-referrer',
-					body: JSON.stringify(data),
-				});
-			}
+					fetch(form.action, {
+						headers: {'Content-Type': 'application/json; charset=utf-8'},
+						method: 'POST',
+						mode: 'cors',
+						cache: 'no-cache',
+						credentials: 'same-origin',
+						redirect: 'follow',
+						referrer: 'no-referrer',
+						body: JSON.stringify(data),
+					});
+				}
+			});
 		</script>
 	</body>
 </html>
