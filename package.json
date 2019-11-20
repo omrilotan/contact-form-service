@@ -18,7 +18,7 @@
 		"cors": "^2.8.4",
 		"email-validator": "^2.0.4",
 		"express": "^4.16.3",
-		"express-formidable": "^1.0.0",
+		"express-formidable": "^1.2.0",
 		"nodemailer": "^4.6.7"
 	},
 	"devDependencies": {
