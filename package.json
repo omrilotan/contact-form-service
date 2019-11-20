@@ -19,7 +19,7 @@
 		"email-validator": "^2.0.4",
 		"express": "^4.16.3",
 		"express-formidable": "^1.0.0",
-		"nodemailer": "^4.6.7"
+		"nodemailer": "^6.3.1"
 	},
 	"devDependencies": {
 		"chai": "^4.1.2",
