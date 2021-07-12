@@ -1,66 +1,15 @@
-defaults: &defaults
-  working_directory: ~/app
-  docker:
-    - image: circleci/node:10
-
-version: 2
-jobs:
-  dependencies:
-    <<: *defaults
-    steps:
-      - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Install dependencies
-          command: npm i
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - ./node_modules
-      - save_cache:
-          key: build-cache-{{ .Revision }}
-          paths:
-            - ../app
-  test:
-    <<: *defaults
-    steps:
-      - restore_cache:
-          key: build-cache-{{ .Revision }}
-      - run:
-          name: Test
-          command: npm t
-      - run:
-          name: Code lint
-          command: npm run lint
-  notify:
-    <<: *defaults
-    steps:
-      - restore_cache:
-          key: build-cache-{{ .Revision }}
-      - run:
-          name: Notify a new release is ready
-          command: curl ci-cd.net/v1/webhook | bash -s $WEBHOOK .circleci/notification.json
-
+version: 2.1
 workflows:
-  version: 2
   ci-cd:
     jobs:
-      - dependencies
-      - test:
-          requires:
-            - dependencies
-      - notify:
-          context: globalenv
-          requires:
-            - test
-          filters:
-            branches:
-              only:
-                - master
+      - test
+jobs:
+  test:
+    working_directory: ~/app
+    docker:
+      - image: circleci/node:14
+    steps:
+      - checkout
+      - run: npm i
+      - run: npm run lint
 
-experimental:
-  notify:
-    branches:
-      only:
-        - master

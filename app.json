@@ -5,6 +5,6 @@
 	"logo": "https://avatars1.githubusercontent.com/u/516342",
 	"keywords": ["express", "email"],
 	"engines": {
-		"node": "10.x"
+		"node": "14.x"
 	}
 }
