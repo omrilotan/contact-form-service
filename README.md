@@ -107,3 +107,6 @@ window.addEventListener('DOMContentLoaded', function() {
 	}
 });
 ```
+
+## Sentry monitoring
+Enable sentry monitoring by setting the DSN address as an environment variable `SENTRY_DSN`.
